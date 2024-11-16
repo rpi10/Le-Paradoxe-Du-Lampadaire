@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Paradoxe du Lampadaire du Petit Prince</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 1.5em;
+        }
+
+        .section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            background: white;
+            padding: 2em;
+            margin: 2em 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .simulator {
+            text-align: center;
+            padding: 2em;
+            margin: 2em 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .light {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 20px auto;
+            transition: background-color 0.1s;
+        }
+
+        .light.on {
+            background-color: #ffd700;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+        }
+
+        .light.off {
+            background-color: #808080;
+        }
+
+        .controls {
+            margin: 20px 0;
+        }
+
+        .controls input {
+            padding: 8px;
+            width: 80px;
+            margin: 0 10px;
+            text-align: center;
+        }
+
+        .info-display {
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+
+        .conclusion {
+            font-style: italic;
+            background: #f8f9fa;
+            padding: 20px;
+            border-left: 4px solid #2c3e50;
+            margin-top: 2em;
+        }
+
+        .hint {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Et si le lampadaire dans le Petit Prince devait s'allumer et s'éteindre toutes les 0 secondes?</h1>
+
+        <div class="section" id="intro">
+            <p>Vous connaissez peut-être ce moment de la fameuse histoire de St Exupéry. Dans Le Petit Prince, notre héros rencontre un allumeur de réverbères sur une minuscule planète. Fidèle à sa consigne, ce personnage dévoué doit allumer son réverbère au coucher du soleil et l'éteindre à son lever. Une tâche qui était autrefois simple, car sa planète tournait à un rythme raisonnable avec des journées et des nuits d'une durée normale. Mais au fil du temps, la rotation de sa planète s'est accélérée, rendant les jours et les nuits de plus en plus courts, transformant sa mission en un ballet frénétique d'allumage et d'extinction.</p>
+        </div>
+
+        <div class="section" id="simple-simulator">
+            <p>Appellons "d" la variable qui décide du temps en seconde d'une nuit dans un monde où les nuits et les jours font la même durée. On a donc un simple lampadaire qui clignote toutes les d secondes (sachant qu'on commence la nuit, le lampadaire commence allumé):</p>
+            
+            <div class="simulator">
+                <div class="light on" id="light1"></div>
+                <div class="controls">
+                    <label for="d-input1">Délai (sec):</label>
+                    <input type="number" id="d-input1" value="2" min="0.01" step="0.01">
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="complete-simulator">
+            <p>Maintenant ajoutons quelques petites choses à notre lampadaire. Tout d'abord, appelons T la variable qui comptera le temps. Si on fait la division euclidienne de T par d, on aura le nombre de nuits et de jours qui sont arrivés jusqu'à lors, car T représente le temps total et d la durée d'un jour. On appelle ce nombre I. Sachant aussi que l'on commence avec le lampadaire allumé et qu'il s'allume et s'éteint au contraire du jour, on sait donc que si I est pair alors le lampadaire est allumé et si I est impair il est éteint.</p>
+
+            <div class="simulator">
+                <div class="light on" id="light2"></div>
+                <div class="info-display">
+                    <div id="time-display">T = 0 secondes</div>
+                    <div id="quotient-display">I = 0 (T/d)</div>
+                    <div id="parity-display">I est PAIR</div>
+                </div>
+                <div class="controls">
+                    <label for="d-input2">Délai (sec):</label>
+                    <input type="number" id="d-input2" value="4" min="0.01" step="0.01">
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="final-simulator">
+            <p>Maintenant pour finir nous pouvons faire approcher d de 0 pour voir ce qui arrive. Vous pouvez essayer, je vous conseille de vous arrêter à 0.01, l'ordinateur aura du mal à visualiser sinon:</p>
+            
+            <div class="simulator">
+                <div class="light on" id="light3"></div>
+                <div class="info-display">
+                    <div id="time-display3">T = 0 secondes</div>
+                    <div id="quotient-display3">I = 0 (T/d)</div>
+                    <div id="parity-display3">I est PAIR</div>
+                </div>
+                <div class="controls">
+                    <label for="d-input3">Délai (sec):</label>
+                    <input type="number" id="d-input3" value="0.1" min="0.01" step="0.01">
+                </div>
+                <p class="hint">Essayez de diminuer progressivement la valeur de d...</p>
+            </div>
+        </div>
+
+        <div class="section" id="conclusion">
+            <h2>Que peut-on en conclure?</h2>
+            <p>Deux choses. Déjà, comme on voit que I augmente de façon exponentielle lorsque d se rapproche de 0 (c'est logique si les jours et les nuits sont de plus en plus courts, on en comptera plus en moins longtemps) on peut en déduire que si d tend vers 0, alors T/d tendra vers l'infini.</p>
+            <p>Ensuite, on peut aussi supposer que lorsque d se rapproche de 0, la lumière va clignoter si vite qu'il serait impossible de savoir si elle est allumée ou éteinte. Elle serait comme dans une sorte de fusion d'état, à la fois allumée et éteinte. Comme la lumière est à la fois allumée et éteinte, ça voudrait dire que T/d est à la fois pair et impair.</p>
+            <p class="conclusion">Ce-ci n'a pas vraiment de sens. Si un nombre n'est pas divisible par deux (il est impair) il ne peut pas être en même temps divisible par deux (pair). Cela mène donc à une contradiction et illustre parfaitement à la fois la raison pour laquelle on ne peut diviser par 0 mais aussi pourquoi diviser par un nombre qui tend vers 0 donne un nombre qui tend vers l'infini.</p>
+        </div>
+    </div>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Light simulator class
+        class LightSimulator {
+            constructor(lightId, inputId, timeDisplayId, quotientDisplayId, parityDisplayId) {
+                this.light = document.getElementById(lightId);
+                this.input = document.getElementById(inputId);
+                this.timeDisplay = document.getElementById(timeDisplayId);
+                this.quotientDisplay = document.getElementById(quotientDisplayId);
+                this.parityDisplay = document.getElementById(parityDisplayId);
+                this.startTime = Date.now();
+                this.d = parseFloat(this.input.value);
+                
+                this.input.addEventListener('change', () => this.updateDelay());
+                this.animate();
+            }
+
+            updateDelay() {
+                this.d = parseFloat(this.input.value);
+                this.startTime = Date.now();
+            }
+
+            animate() {
+                const elapsedTime = (Date.now() - this.startTime) / 1000;
+                const I = Math.floor(elapsedTime / this.d);
+                const isEven = I % 2 === 0;
+
+                this.light.className = `light ${isEven ? 'on' : 'off'}`;
+
+                if (this.timeDisplay) {
+                    this.timeDisplay.textContent = `T = ${elapsedTime.toFixed(2)} secondes`;
+                    this.quotientDisplay.textContent = `I = ${I} (T/d)`;
+                    this.parityDisplay.textContent = `I est ${isEven ? 'PAIR' : 'IMPAIR'}`;
+                }
+
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize simulators
+        const simulator1 = new LightSimulator('light1', 'd-input1');
+        const simulator2 = new LightSimulator('light2', 'd-input2', 'time-display', 'quotient-display', 'parity-display');
+        const simulator3 = new LightSimulator('light3', 'd-input3', 'time-display3', 'quotient-display3', 'parity-display3');
+    </script>
+</body>
+</html>
